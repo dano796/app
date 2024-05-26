@@ -5,9 +5,10 @@ FROM node:14
 WORKDIR /usr/src/app
 
 # Copia los archivos de la aplicación al directorio de trabajo
-COPY style.css ./
+COPY package*.json ./
 COPY index.html .
-COPY script.js .
+COPY style.css
+COPY server.js .
 
 # Instala las dependencias de la aplicación
 RUN npm install express
