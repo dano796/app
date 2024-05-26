@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY package*.json ./
 COPY index.html .
+COPY script.js .
 COPY server.js .
 COPY style.css .
 
