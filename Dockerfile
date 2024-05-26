@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY package*.json ./
 COPY index.html .
-COPY style.css
 COPY server.js .
+COPY style.css .
 
 # Instala las dependencias de la aplicación
 RUN npm install express
