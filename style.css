@@ -45,7 +45,6 @@ body {
 .play-board .head {
   background: #60CBFF;
 }
-
 .controls {
   display: none;
   justify-content: space-between;
@@ -59,7 +58,6 @@ body {
   cursor: pointer;
   border-right: 1px solid #171B26;
 }
-
 @media screen and (max-width: 800px) {
   .wrapper {
     width: 90vmin;
