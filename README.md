@@ -4,78 +4,90 @@
 Esta es una aplicación web del clásico juego de la serpiente. La aplicación está desarrollada con Flask y se despliega automáticamente en una instancia de AWS EC2 utilizando Docker y Terraform.
 
 ## Pasos para Desplegar
-
-### Pre-requisitos
-- Tener una cuenta de AWS con credenciales configuradas.
-- Tener instalado Docker.
-- Tener instalado Terraform.
-- Tener configurado AWS CLI en tu máquina local.
-
 ### Desplegar la Aplicación
+```markdown
+Este repositorio contiene los archivos necesarios para desplegar y ejecutar una aplicación en un contenedor Docker, así como los archivos Terraform necesarios para desplegar automáticamente la infraestructura en AWS.
 
-1. **Clonar el repositorio:**
-    ```sh
-    git clone <URL_DEL_REPOSITORIO>
-    cd snake-game
-    ```
+## Requisitos Previos
 
-2. **Construir la imagen de Docker:**
-    ```sh
-    docker build -t snake-game .
-    ```
+1. Tener instalado [Git](https://git-scm.com/).
+2. Tener instalado [Docker](https://www.docker.com/get-started).
+3. Tener instalado [Terraform](https://www.terraform.io/downloads).
+4. Una cuenta de AWS y configurar las credenciales de AWS en tu máquina local.
 
-3. **Configurar AWS CLI:**
-    Si aún no has configurado AWS CLI, hazlo con el siguiente comando y sigue las instrucciones:
-    ```sh
-    aws configure
-    ```
+## Instrucciones
 
-4. **Iniciar la infraestructura de AWS con Terraform:**
-    ```sh
-    cd terraform
-    terraform init
-    terraform apply -var 'aws_access_key=YOUR_ACCESS_KEY' -var 'aws_secret_key=YOUR_SECRET_KEY'
-    ```
+### 1. Clonar el Repositorio
 
-    - Reemplaza `YOUR_ACCESS_KEY` y `YOUR_SECRET_KEY` con tus credenciales de AWS.
-    - Sigue las instrucciones en pantalla y confirma la creación de la infraestructura cuando se te pida.
+Para clonar este repositorio, abre una terminal y ejecuta el siguiente comando:
 
-5. **Conectarse a la instancia de EC2:**
-    Una vez que Terraform finalice, encontrarás la IP de la instancia en la salida. Conéctate a la instancia EC2 utilizando SSH:
-    ```sh
-    ssh -i /path/to/your-key.pem ec2-user@<INSTANCE_IP>
-    ```
+```bash
+git clone https://github.com/dano796/app.git
+cd app
+```
 
-6. **Instalar Docker en la instancia de EC2:**
-    Una vez conectado a la instancia EC2, instala Docker:
-    ```sh
-    sudo amazon-linux-extras install docker
-    sudo service docker start
-    sudo usermod -a -G docker ec2-user
-    ```
+### 2. Instalar Terraform y Configurar la Cuenta de AWS
 
-    Después de ejecutar los comandos anteriores, cierra la sesión de SSH y vuelve a conectarte para aplicar los cambios de grupo.
+#### Instalación de Terraform
 
-7. **Ejecutar el contenedor de Docker en la instancia EC2:**
-    Una vez que Docker esté instalado y en funcionamiento, ejecuta el siguiente comando para ejecutar el contenedor de Docker:
-    ```sh
-    docker run -d -p 80:5000 snake-game
-    ```
+1. Descarga Terraform desde la [página oficial](https://www.terraform.io/downloads).
+2. Extrae el archivo descargado y coloca el ejecutable en un directorio incluido en tu variable de entorno `PATH`.
 
-8. **Acceder a la aplicación:**
-    Abra un navegador y acceda a `http://<INSTANCE_IP>`. Aquí `<INSTANCE_IP>` es la dirección IP de tu instancia EC2.
+Para verificar la instalación, ejecuta:
 
-## Notas Adicionales
+```bash
+terraform -v
+```
 
-- Asegúrate de que el puerto 80 esté abierto en el grupo de seguridad de tu instancia EC2 para permitir el tráfico HTTP.
-- Puedes revisar los logs del contenedor en la instancia EC2 con:
-    ```sh
-    docker logs <container_id>
-    ```
+Deberías ver la versión de Terraform instalada.
 
-- Para detener el contenedor:
-    ```sh
-    docker stop <container_id>
-    ```
+#### Configurar las Credenciales de AWS
 
-¡Disfruta jugando al clásico juego de la serpiente en tu navegador!
+Terraform requiere acceso a tu cuenta de AWS para desplegar la infraestructura. Para configurar tus credenciales de AWS, sigue estos pasos:
+
+1. Crea un directorio llamado `.aws` en tu carpeta de inicio si no existe:
+
+```bash
+mkdir ~/.aws
+```
+
+2. Dentro de ese directorio, crea un archivo llamado `credentials`:
+
+```bash
+touch ~/.aws/credentials
+```
+
+3. Abre el archivo `credentials` en un editor de texto y añade tu `AWS CLI`, debe quedar algo así:
+
+```plaintext
+[default]
+aws_cli
+```
+
+### 3. Desplegar la Infraestructura en AWS con Terraform
+
+#### Inicializar Terraform
+
+Antes de aplicar los cambios, debes inicializar el entorno de trabajo de Terraform. Desde el directorio donde clonaste el repositorio, ejecuta:
+
+```bash
+terraform init
+```
+
+Este comando descarga los proveedores necesarios y prepara el entorno de trabajo.
+
+#### Aplicar los Cambios
+
+Para desplegar la infraestructura, utiliza el comando `terraform apply`. Este comando creará todos los recursos definidos en los archivos de configuración de Terraform. Ejecuta:
+
+```bash
+terraform apply
+```
+
+Se te pedirá confirmar la acción escribiendo `yes`. Terraform comenzará a crear los recursos en AWS.
+
+#### Verificar el Despliegue
+
+Una vez completado el comando `terraform apply`, puedes verificar en la consola de AWS que los recursos han sido creados correctamente.
+
+## Gracias!
