@@ -1,7 +1,7 @@
 # Snake Game
 
 ## Descripción
-Esta es una aplicación web del clásico juego de la serpiente. La aplicación está desarrollada con HTML, CSS y JavaSscript y se despliega automáticamente en una instancia de AWS EC2 utilizando Docker y Terraform.
+Esta es una aplicación web del clásico juego de la serpiente. La aplicación está desarrollada con HTML, CSS y JavaScript y se despliega automáticamente en una instancia de AWS EC2 utilizando Docker y Terraform.
 
 ## Pasos para Desplegar
 ### Desplegar la Aplicación
